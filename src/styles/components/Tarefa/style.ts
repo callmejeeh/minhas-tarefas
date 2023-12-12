@@ -1,4 +1,25 @@
 import styled from 'styled-components'
+import variaveis from '../../variaveis'
+import * as enums from '../../../utils/enums/tarefa'
+
+type TagProps = {
+  prioridade?: enums.Prioridade
+  status?: enums.Status
+  parametro: 'status' | 'prioridade'
+}
+
+function retornaCordeFundo(props: TagProps): string {
+  if (props.parametro === 'prioridade') {
+    if (props.prioridade === enums.Prioridade.URGENTE) return variaveis.vermelho
+    if (props.prioridade === enums.Prioridade.IMPORTANTE)
+      return variaveis.amarelo2
+  } else {
+    if (props.status === enums.Status.PENDENTE) return variaveis.amarelo
+    if (props.status === enums.Status.CONCLUIDA) return variaveis.verde
+  }
+
+  return '#ccc'
+}
 
 export const Card = styled.div`
   background-color: #fcfcfc;
@@ -14,12 +35,12 @@ export const Titulo = styled.h3`
   margin-bottom: 16px;
 `
 
-export const Tag = styled.span`
+export const Tag = styled.span<TagProps>`
   padding: 4px 8px;
   font-size: 10px;
   font-weight: bold;
   color: #fff;
-  background-color: #e1a32a;
+  background-color: ${(props) => retornaCordeFundo(props)};
   border-radius: 8px;
   margin-right: 16px;
   display: inline-block;
@@ -55,4 +76,10 @@ export const Botao = styled.button`
   background-color: #2f3640;
   border-radius: 8px;
   margin-right: 8px;
+`
+export const BotaoSalvar = styled(Botao)`
+  background-color: ${variaveis.verde};
+`
+export const BotaoCancelar = styled(Botao)`
+  background-color: ${variaveis.vermelho};
 `
