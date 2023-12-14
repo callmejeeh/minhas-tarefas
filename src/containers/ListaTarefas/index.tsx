@@ -1,5 +1,5 @@
 import Tarefa from '../../styles/components/Tarefa'
-import { Container } from './styles'
+import { MainContainer, Titulo } from '../../styles/'
 import { useSelector } from 'react-redux'
 import { RootReducer } from '../../store'
 
@@ -30,18 +30,27 @@ const ListaTarefas = () => {
       return itens
     }
   }
+
+  const exibeResultadoFiltro = (quantidade: number) => {
+    let mensagem = ''
+    const complemento =
+      termo !== undefined && termo.length > 0 ? `e "${termo}"` : ''
+    if (criterio === 'todas') {
+      mensagem = `${quantidade} tarefa(s) encontradas como: todas ${complemento}`
+    } else {
+      mensagem = `${quantidade} tarefa(s) encontradas como: ${`${valor}`}${complemento}`
+    }
+    return mensagem
+  }
+
+  const tarefas = filtraTarefas()
+  const Mensagem = exibeResultadoFiltro(tarefas.length)
+
   return (
-    <Container>
-      <p>
-        2 tarefas marcadas como &quot;categoria&ldquo; e &quot;{termo}&ldquo;
-      </p>
+    <MainContainer>
+      <Titulo as="p">{Mensagem}</Titulo>
       <ul>
-        <li>{termo}</li>
-        <li>{criterio}</li>
-        <li>{valor}</li>
-      </ul>
-      <ul>
-        {filtraTarefas().map((t) => (
+        {tarefas.map((t) => (
           <li key={t.titulo}>
             <Tarefa
               id={t.id}
@@ -53,7 +62,7 @@ const ListaTarefas = () => {
           </li>
         ))}
       </ul>
-    </Container>
+    </MainContainer>
   )
 }
 
