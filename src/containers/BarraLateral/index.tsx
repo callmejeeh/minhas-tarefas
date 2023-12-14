@@ -1,20 +1,53 @@
+import { useDispatch, useSelector } from 'react-redux'
 import FiltroCard from '../../styles/components/FiltroCard'
 import * as S from './styles'
+import { RootReducer } from '../../store'
+import { alteraTermo } from '../../store/reducers/filtro'
+import * as enums from '../../utils/enums/tarefa'
 
-const BarraLateral = () => (
-  <S.Aside>
-    <div>
-      <S.Campo type="text" placeholder="Buscar" />
-      <S.Filtros>
-        <FiltroCard legenda="pendentes" contador={1} />
-        <FiltroCard legenda="concluídas" contador={4} />
-        <FiltroCard legenda="urgentes" contador={2} />
-        <FiltroCard legenda="importantes" contador={5} />
-        <FiltroCard legenda="normais" contador={3} />
-        <FiltroCard ativo legenda="todas" contador={10} />
-      </S.Filtros>
-    </div>
-  </S.Aside>
-)
+const BarraLateral = () => {
+  const dispatch = useDispatch()
+  const { termo } = useSelector((state: RootReducer) => state.filtro)
+  return (
+    <S.Aside>
+      <div>
+        <S.Campo
+          type="text"
+          placeholder="Buscar"
+          value={termo}
+          onChange={(e) => dispatch(alteraTermo(e.target.value))}
+        />
+        <S.Filtros>
+          <FiltroCard
+            valor={enums.Status.PENDENTE}
+            criterio="status"
+            legenda="pendentes"
+          />
+          <FiltroCard
+            valor={enums.Status.CONCLUIDA}
+            criterio="status"
+            legenda="concluídas"
+          />
+          <FiltroCard
+            valor={enums.Prioridade.URGENTE}
+            criterio="prioridade"
+            legenda="urgentes"
+          />
+          <FiltroCard
+            valor={enums.Prioridade.IMPORTANTE}
+            criterio="prioridade"
+            legenda="importantes"
+          />
+          <FiltroCard
+            valor={enums.Prioridade.NORMAL}
+            criterio="prioridade"
+            legenda="normais"
+          />
+          <FiltroCard criterio="todas" legenda="todas" />
+        </S.Filtros>
+      </div>
+    </S.Aside>
+  )
+}
 
 export default BarraLateral
