@@ -11,7 +11,7 @@ const EstiloGlobal = createGlobalStyle`
 }
 `
 export const Container = styled.div`
-  display: inline;
+  display: grid;
   grid-template-columns: 1fr 1fr;
   padding: 0 40px;
   height: 100vh;
@@ -20,7 +20,7 @@ export const Container = styled.div`
 `
 export const Titulo = styled.h2`
   font-weight: bold;
-  font-size: 64px;
+  font-size: 32px;
   margin-top: 40px;
   margin-bottom: 40px;
   display: block;
