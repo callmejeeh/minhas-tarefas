@@ -1,4 +1,4 @@
-import { useState, useEffect, ChangeEvent, SetStateAction } from 'react'
+import { useState, useEffect, SetStateAction } from 'react'
 import * as S from './style'
 import { useDispatch } from 'react-redux'
 import { remover, editar } from '../../../store/reducers/tarefas'
