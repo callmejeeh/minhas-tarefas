@@ -8,8 +8,9 @@ const Form = styled.form`
   color: #666666;
 
   textarea {
+    margin-top: 16px;
     resize: none;
-    margin: 16px 0;
+    max-height: 40px;
   }
 `
 

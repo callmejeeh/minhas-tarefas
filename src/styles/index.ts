@@ -11,18 +11,16 @@ const EstiloGlobal = createGlobalStyle`
 }
 `
 export const Container = styled.div`
-  display: grid;
-  grid-template-columns: 224px auto;
-`
-
-export const MainContainer = styled.main`
+  display: inline;
+  grid-template-columns: 1fr 1fr;
   padding: 0 40px;
   height: 100vh;
-  overflow-y: scroll;
+  width: 100%;
+  margin-top: 16px;
 `
 export const Titulo = styled.h2`
   font-weight: bold;
-  font-size: 18px;
+  font-size: 64px;
   margin-top: 40px;
   margin-bottom: 40px;
   display: block;
@@ -51,4 +49,12 @@ export const Botao = styled.button`
 export const BotaoSalvar = styled(Botao)`
   background-color: ${variaveis.verde};
 `
+
+export const BotaoVoltar = styled(Botao)`
+  width: 160px;
+  height: 40px;
+  position: fixed;
+  top: 120px;
+`
+
 export default EstiloGlobal

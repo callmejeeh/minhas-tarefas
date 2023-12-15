@@ -1,70 +1,67 @@
-import { useState, useEffect, ChangeEvent } from 'react'
+import { useState, useEffect, ChangeEvent, SetStateAction } from 'react'
 import * as S from './style'
 import { useDispatch } from 'react-redux'
-import { remover, editar, alteraStatus } from '../../../store/reducers/tarefas'
+import { remover, editar } from '../../../store/reducers/tarefas'
 import TarefaClass from '../../../models/Tarefa'
 import { Botao, BotaoSalvar } from '../..'
 
-import * as enums from '../../../utils/enums/tarefa'
-
 type Props = TarefaClass
 
-const Tarefa = ({ descricao, prioridade, status, titulo, id }: Props) => {
+const Tarefa = ({ nome, telefone, email, id }: Props) => {
   const dispatch = useDispatch()
   const [estaEditando, setEstaEditando] = useState(false)
-  const [descricaoEdit, setDescricaoEdit] = useState('')
+  const [telefoneEdit, setTelefoneEdit] = useState('')
+  const [emailEdit, setEmailEdit] = useState('')
 
   useEffect(() => {
-    if (descricao.length > 0) {
-      setDescricaoEdit(descricao)
+    if (telefone.length > 0) {
+      setTelefoneEdit(telefone)
     }
-  }, [descricao])
+  }, [telefone])
+
+  useEffect(() => {
+    if (email.length > 0) {
+      setEmailEdit(email)
+    }
+  }, [email])
 
   function cancelarEdicao() {
     setEstaEditando(false)
-    setDescricaoEdit(descricao)
-  }
-
-  function alteraStatusTarefa(evento: ChangeEvent<HTMLInputElement>) {
-    dispatch(
-      alteraStatus({
-        id,
-        finalizado: evento.target.checked
-      })
-    )
+    setTelefoneEdit(telefone)
   }
 
   return (
     <S.Card>
-      <label htmlFor={titulo}>
-        <input
-          type="checkbox"
-          id={titulo}
-          checked={status === enums.Status.CONCLUIDA}
-          onChange={alteraStatusTarefa}
-        />
+      <label htmlFor={nome}>
         <S.Titulo>
           {estaEditando && <em>Editando:</em>}
-          {titulo}
+          {nome}
         </S.Titulo>
       </label>
-      <S.Tag parametro="prioridade" prioridade={prioridade}>
-        {prioridade}
-      </S.Tag>
-      <S.Tag parametro="status" status={status}>
-        {status}
-      </S.Tag>
       <S.Descricao
         disabled={!estaEditando}
-        value={descricaoEdit}
-        onChange={(e) => setDescricaoEdit(e.target.value)}
-      />
+        value={telefoneEdit}
+        onChange={(e: { target: { value: SetStateAction<string> } }) =>
+          setTelefoneEdit(e.target.value)
+        }
+      >
+        {telefone}
+      </S.Descricao>
+      <S.Descricao
+        disabled={!estaEditando}
+        value={emailEdit}
+        onChange={(e: { target: { value: SetStateAction<string> } }) =>
+          setEmailEdit(e.target.value)
+        }
+      >
+        {email}
+      </S.Descricao>
       <S.BarraAcoes>
         {estaEditando ? (
           <>
             <BotaoSalvar
               onClick={() => {
-                dispatch(editar({ descricao, prioridade, status, titulo, id }))
+                dispatch(editar({ nome, telefone, email, id }))
                 setEstaEditando(false)
               }}
             >
